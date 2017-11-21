@@ -5,11 +5,6 @@
   <title>OnlineShop - Commande</title>
   <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
   <link rel="stylesheet" type="text/css" href="./assets/css/style.css">
-  <script type="text/javascript" src="./assets/js/jquery-3.2.1.min.js"></script>
-  <script type="text/javascript" src="./assets/scripts/order.js"></script>
-  <script type="text/javascript" src="./assets/js/jquery.validate.min.js"></script>
-  <script type="text/javascript" src="./assets/js/additional-methods.min.js"></script>
-  <script type="text/javascript" src="./assets/js/messages_fr.js"></script>
 </head>
 <body>
   <header>
@@ -30,7 +25,7 @@
                 <i class="fa fa-circle fa-stack-2x fa-inverse"></i>
                 <i class="fa fa-shopping-cart fa-stack-1x"></i>
               </span>
-              <span class="count"></span>
+              <span class="count">3</span>
             </a>
           </li>
         </ul>
@@ -47,13 +42,13 @@
             <div class="col">
               <div class="form-group">
                 <label for="first-name">Prénom</label>
-                <input id="first-name" class="form-control" type="text" id="first-name" name="first-name" placeholder="Prénom" required>
+                <input class="form-control" type="text" id="first-name" name="first-name" placeholder="Prénom" minlength="2" required>
               </div>
             </div>
             <div class="col">
               <div class="form-group">
                 <label for="last-name">Nom</label>
-                <input id="last-name" class="form-control" type="text" id="last-name" name="last-name" placeholder="Nom" required>
+                <input class="form-control" type="text" id="last-name" name="last-name" placeholder="Nom" minlength="2" required>
               </div>
             </div>
           </div>
@@ -61,13 +56,13 @@
             <div class="col">
               <div class="form-group">
                 <label for="email">Adresse courriel</label>
-                <input id="email" class="form-control" type="email" id="email" name="email" placeholder="Adresse courriel" required>
+                <input class="form-control" type="email" id="email" name="email" placeholder="Adresse courriel" required>
               </div>
             </div>
             <div class="col">
               <div class="form-group">
                 <label for="phone">Téléphone</label>
-                <input id="phone" class="form-control" type="tel" id="phone" name="phone" placeholder="514-555-0162" required>
+                <input class="form-control" type="tel" id="phone" name="phone" placeholder="###-###-####" required>
               </div>
             </div>
           </div>
@@ -78,13 +73,13 @@
             <div class="col">
               <div class="form-group">
                 <label for="credit-card">Numéro de carte de crédit</label>
-                <input id="credit-card" class="form-control" type="text" id="credit-card" name="credit-card" placeholder="4111 1111 1111 1111" required>
+                <input class="form-control" type="text" id="credit-card" name="credit-card" placeholder="•••• •••• •••• ••••" required>
               </div>
             </div>
             <div class="col">
               <div class="form-group">
                 <label for="credit-card-expiry">Expiration (mm/aa)</label>
-                <input id="credit-card-expiry" class="form-control" type="text" id="credit-card-expiry" name="credit-card-expiry" placeholder="mm/aa" required>
+                <input class="form-control" type="text" id="credit-card-expiry" name="credit-card-expiry" placeholder="mm/aa" required>
               </div>
             </div>
           </div>
@@ -94,7 +89,19 @@
     </article>
   </main>
   <footer>
-    <p>Par Emilie Brouillard et Jessica Favin</p>
+    <p>Par Antoine Béland et Konstantinos Lambrou-Latreille</p>
   </footer>
+
+  <script type="text/javascript" src="./assets/js/jquery-3.2.1.min.js"></script>
+  <script type="text/javascript" src="./assets/js/jquery.validate.min.js"></script>
+  <script type="text/javascript" src="./assets/js/additional-methods.min.js"></script>
+  <script type="text/javascript" src="./assets/js/messages_fr.js"></script>
+
+  <script type="text/javascript" src="./assets/scripts/utils.js"></script>
+  <script type="text/javascript" src="./assets/scripts/products.service.js"></script>
+  <script type="text/javascript" src="./assets/scripts/shopping-cart.service.js"></script>
+  <script type="text/javascript" src="./assets/scripts/orders.service.js"></script>
+  <script type="text/javascript" src="./assets/scripts/shopping-cart.controller.js"></script>
+  <script type="text/javascript" src="./assets/scripts/order.controller.js"></script>
 </body>
 </html>

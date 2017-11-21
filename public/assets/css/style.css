@@ -81,6 +81,19 @@ a:hover {
 .btn-group > button.selected {
   background-color: #ddf2fb;
 }
+.dialog {
+  position: fixed;
+  bottom: 30px;
+  left: 50%;
+  z-index: 10;
+  display: none;
+  max-width: 400px;
+  padding: 16px;
+  color: #fff;
+  background-color: #000;
+  border-radius: 4px;
+  transform: translateX(-50%);
+}
 .form-control {
   padding: 9px;
   border: 1px solid #999;
@@ -211,6 +224,7 @@ header nav .shopping-cart .count {
   position: absolute;
   right: -8px;
   bottom: -14px;
+  display: none;
   width: 18px;
   height: 18px;
   font-size: 0.7em;
@@ -304,22 +318,6 @@ article .right-header {
   width: 100%;
   margin-bottom: 10px;
 }
-
-#dialog {
-  padding: 10px;
-  font-size: 0.8em;
-  color: #fff;
-  text-decoration: none;
-  cursor: pointer;
-  background-color: black;
-  border: 1px solid black;
-  width: fit-content;
-  margin: auto;
-  display: none;
-  border-radius: 4px;
-  transition: all ease-out 0.2s;
-}
-
 /* Contact info container */
 .contact-info {
   padding: 20px 0;
