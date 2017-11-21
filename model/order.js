@@ -1,3 +1,4 @@
+/*
 var Order = new Schema({
   id: { type: Number, unique: true },
   firstName: String,
@@ -8,3 +9,4 @@ var Order = new Schema({
 }, { versionKey: false });
 
 mongoose.model("Order", Order);
+*/

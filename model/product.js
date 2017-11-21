@@ -1,10 +1,6 @@
+/*
 var mongoose = require("mongoose");
 var Schema = mongoose.Schema;
-
-//categories existantes
-var categories = ["cameras", "consoles", "screens", "computers", "all"];
-
-var idExistsBoolean = false;
 
 //creation du model mongoose Product et exports en même temps
 var Product = module.exports = mongoose.model("Product", new Schema({
@@ -16,6 +12,12 @@ var Product = module.exports = mongoose.model("Product", new Schema({
   description: String,
   features: Array
 }, { versionKey: false }));
+*/
+
+var db = require("../lib/db");
+
+//categories existantes
+var categories = ["cameras", "consoles", "screens", "computers", "all"];
 
 //take category and criteria and check if allowed
 //and add the restriction???
