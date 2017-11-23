@@ -15,14 +15,13 @@ var onlineShop = onlineShop || {};
    * @private
    */
   function _updateCount() {
-    shoppingCartService.getItemsCount().done(function(total) {
-      var countElement = $(".shopping-cart").find(".count");
-      if (total > 0) {
-        countElement.addClass("visible").text(total);
-      } else {
-        countElement.removeClass("visible");
-      }
-    });
+    var itemsCount = shoppingCartService.getItemsCount();
+    var countElement = $(".shopping-cart").find(".count");
+    if (itemsCount > 0) {
+      countElement.addClass("visible").text(itemsCount);
+    } else {
+      countElement.removeClass("visible");
+    }
   }
 
   /**

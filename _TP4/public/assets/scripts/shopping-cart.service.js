@@ -11,7 +11,7 @@ onlineShop.shoppingCartService = (function($, productsService) {
 
   var self = {};
   var items = {};
-  var cartsPromise;
+
   /**
    * Adds an item in the shopping cart.
    *
@@ -25,38 +25,21 @@ onlineShop.shoppingCartService = (function($, productsService) {
     if (!quantity || typeof quantity !== "number" || quantity <= 0) {
       quantity = 1;
     }
-    
-    if (!cartsPromise) {
-      cartsPromise = 
-        jQuery.ajax({
-          url: "/api/shopping-cart/"+productId,
-          type: "GET",
-          dataType: "json",
-          contentType: "application/json",
-          statusCode: {
-            404: function() {
-              jQuery.ajax({
-                url: "/api/shopping-cart",
-                type: "POST",
-                data: JSON.stringify({"productId": productId, "quantity": quantity}),
-                contentType: "application/json",
-                success: function() {
-                  items[productId] = quantity;
-                }
-              })
-              //reload page cause otherwise error 404 blocks further updates/actions
-              //window.location.reload(false); 
-            }
-          },
-          success: function(data) {
-            self.updateItemQuantity(productId, self.getItemQuantity(productId) + quantity);
-            //reload page cause otherwise further updates/actions are blocked ??
-            //window.location.reload(false);
-          }
-        }
-      );
-    }
-    
+    /*if (items[productId]) {
+      items[productId] += quantity;
+    } else {
+      items[productId] = quantity;
+    }*/
+    var tmp = jQuery.ajax({
+      url: "/api/shopping-cart",
+      type: "POST",
+      data: JSON.stringify({"productId": productId, "quantity": quantity}),
+      contentType: "application/json",
+      success:function(){
+        alert("bien ajouté");
+      }
+    })
+    _updateLocalStorage();
   };
 
   /**
@@ -81,18 +64,16 @@ onlineShop.shoppingCartService = (function($, productsService) {
   /**
    * Gets the items count in the shopping cart.
    *
-   * @returns {jquery.promise}  The items count.
+   * @returns {number}  The items count.
    */
   self.getItemsCount = function() {
-    return self.getItems().then(function(items) {
-      var total = 0;
-      for (var productId in items) {
-        if (items.hasOwnProperty(productId) && items[productId]) {
-          total += items[productId].quantity;
-        }
+    var total = 0;
+    for (var productId in items) {
+      if (items.hasOwnProperty(productId) && items[productId]) {
+        total += items[productId];
       }
-      return total;
-      });
+    }
+    return total;
   };
 
   /**
@@ -133,15 +114,8 @@ onlineShop.shoppingCartService = (function($, productsService) {
       throw new Error("The specified quantity is invalid.")
     }
     if (items[productId]) {
-      jQuery.ajax({
-        url: "/api/shopping-cart/" + productId,
-        type: "PUT",
-        data: JSON.stringify({"quantity": quantity}),
-        contentType: "application/json",
-        success: function () {
-          items[productId] = quantity;
-        }
-      })
+      items[productId] = quantity;
+      _updateLocalStorage();
     }
   };
 
@@ -151,43 +125,32 @@ onlineShop.shoppingCartService = (function($, productsService) {
    * @param productId   The product ID associated with the item to remove.
    */
   self.removeItem = function(productId) {
-    jQuery.ajax({
-      url: "/api/shopping-cart/" + productId,
-      type: "DELETE",
-      contentType: "application/json",
-      success: function () {
-        items[productId] = undefined;
-      }
-    })
+    if (items[productId]) {
+      items[productId] = undefined;
+    }
+    _updateLocalStorage();
   };
 
   /**
    * Removes all the items in the shopping cart.
    */
   self.removeAllItems = function() {
-    jQuery.ajax({
-      url: "/api/shopping-cart/",
-      type: "DELETE",
-      contentType: "application/json",
-      success: function () {
-        items = {};
-      }
-    })
+    items = {};
+    _updateLocalStorage();
   };
 
+  /**
+   * Updates the shopping cart in the local storage.
+   *
+   * @private
+   */
+  function _updateLocalStorage() {
+    localStorage["shoppingCart"] = JSON.stringify(items);
+  }
+
   // Initializes the shopping cart.
-  if (Object.keys(items).length === 0 && items.constructor === Object) {
-    jQuery.ajax({
-      url: "/api/shopping-cart/",
-      type: "GET",
-      dataType: "json",
-      contentType: "application/json",
-      success: function(data) {
-        data.forEach(function(i) {
-          items[i.productId] = i.quantity;
-        })
-      }
-    });
+  if (localStorage["shoppingCart"]) {
+    items = JSON.parse(localStorage["shoppingCart"]);
   }
 
   return self;

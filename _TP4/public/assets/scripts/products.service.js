@@ -22,14 +22,13 @@ onlineShop.productsService = (function($) {
   self.getProducts = function(sortingCriteria, category) {
     if (!productsPromise) {
       //productsPromise = $.get("./data/products.json");
-      productsPromise = 
-        jQuery.ajax({
+      productsPromise = JSON.parse(
+      jQuery.ajax({
           url: "/api/products",
           type: "GET",
           data: JSON.stringify({"category": category, "criteria": sortingCriteria}),
           contentType: "application/json"
-        }
-      );
+      }));
     }
     return productsPromise.then(function(products) {
       if (category) {
